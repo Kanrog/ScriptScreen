@@ -8,7 +8,7 @@ A minimalist, high-contrast, distraction-free digital communication board design
 
 ScriptScreen runs entirely in the browser as a single-file application with zero dependencies, making it fast, secure, and private.
 
-🌐 **Live App:** [https://kanrog.github.io/ScriptScreen/](https://kanrog.github.io/ScriptScreen/)
+🌐 **Live App:** [https://kanrog.com/ScriptScreen/](https://kanrog.com/ScriptScreen/)
 
 ## Features
 
