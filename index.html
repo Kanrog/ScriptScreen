@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="cb-icon.ico">
     <title>ScriptScreen</title>
+    <!-- Custom Embedded SVG Icon matching SS logo -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M 448, 224 C 448, 332.25 358.25, 420 248, 420 C 217.5, 420 188.75, 412.75 163.5, 400 L 96, 432 L 124, 356 C 88.5, 321.25 64, 275.5 64, 224 C 64, 115.75 153.75, 28 264, 28 C 374.25, 28 448, 115.75 448, 224 Z' fill='%237b2cbf' stroke='%23000000' stroke-width='24' stroke-linejoin='round'/%3E%3Ctext x='50%25' y='53%25' dominant-baseline='middle' text-anchor='middle' fill='%23ffffff' font-family='sans-serif' font-weight='900' font-size='190px' letter-spacing='5px'%3ESS%3C/text%3E%3C/svg%3E">
+    
     <!-- Embedded PWA Manifest via Data URI -->
-    <link rel="manifest" href='data:application/manifest+json,{"name":"Communication Board","short_name":"CommBoard","start_url":"./","display":"standalone","background_color":"#000000","theme_color":"#000000"}'>
+    <link rel="manifest" href='data:application/manifest+json,{"name":"ScriptScreen","short_name":"ScriptScreen","start_url":"./","display":"standalone","background_color":"#000000","theme_color":"#000000"}'>
     <style>
         body {
             background-color: #000;
@@ -25,22 +27,36 @@
             border: none;
             outline: none;
             font-family: sans-serif;
-            font-size: 8vh; /* Default size */
+            font-size: 8vh;
             width: 100%;
             resize: none;
             word-wrap: break-word;
             white-space: pre-wrap;
         }
-        #controls {
+        #footer {
             display: flex;
-            justify-content: flex-end;
-            gap: 10px;
+            justify-content: space-between;
+            align-items: center;
             padding-top: 10px;
             opacity: 0.3;
             transition: opacity 0.3s;
         }
-        #controls:hover {
+        #footer:hover {
             opacity: 1;
+        }
+        .github-link {
+            color: #888;
+            text-decoration: none;
+            font-size: 12px;
+            font-family: sans-serif;
+        }
+        .github-link:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+        #controls {
+            display: flex;
+            gap: 10px;
         }
         .control-btn {
             background: #222;
@@ -59,22 +75,23 @@
 <body>
     <textarea id="message-area" autofocus spellcheck="false" placeholder="Type your message here..."></textarea>
     
-    <div id="controls">
-        <button class="control-btn" onclick="adjustSize(-1)" title="Smaller Text">A-</button>
-        <button class="control-btn" onclick="adjustSize(1)" title="Larger Text">A+</button>
+    <div id="footer">
+        <a href="https://github.com/kanrog/ScriptScreen" target="_blank" class="github-link">GitHub</a>
+        <div id="controls">
+            <button class="control-btn" onclick="adjustSize(-1)" title="Smaller Text">A-</button>
+            <button class="control-btn" onclick="adjustSize(1)" title="Larger Text">A+</button>
+        </div>
     </div>
 
     <script>
         const textarea = document.getElementById('message-area');
         
-        // Load saved font size if available
-        let currentSize = localStorage.getItem('commBoardFontSize');
+        let currentSize = localStorage.getItem('scriptScreenFontSize');
         if (currentSize) {
             textarea.style.fontSize = currentSize + 'vh';
         }
 
         function adjustSize(change) {
-            // Extract current numeric value from computed style or default to 8
             let currentVh = parseFloat(window.getComputedStyle(textarea).fontSize);
             let parentVh = parseFloat(window.getComputedStyle(textarea.parentElement).height);
             let currentVal = (currentVh / parentVh) * 100;
@@ -82,12 +99,11 @@
             let newVal = Math.max(3, Math.min(25, Math.round(currentVal + (change * 2))));
             textarea.style.fontSize = newVal + 'vh';
             
-            // Save preference
-            localStorage.setItem('commBoardFontSize', newVal);
+            localStorage.setItem('scriptScreenFontSize', newVal);
         }
 
         document.body.addEventListener('click', (e) => {
-            if (e.target.tagName !== 'BUTTON') {
+            if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'A') {
                 textarea.focus();
             }
         });
