@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="ss-icon.svg" width="128" height="128" alt="ScriptScreen Logo">
+</p>
+
 # ScriptScreen
 
 A minimalist, high-contrast, distraction-free digital communication board designed for individuals who are temporarily unable to speak or require a simple text-display tool. 
