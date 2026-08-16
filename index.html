@@ -4,10 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ScriptScreen</title>
-    <!-- Custom Embedded SVG Icon matching SS logo -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M 448, 224 C 448, 332.25 358.25, 420 248, 420 C 217.5, 420 188.75, 412.75 163.5, 400 L 96, 432 L 124, 356 C 88.5, 321.25 64, 275.5 64, 224 C 64, 115.75 153.75, 28 264, 28 C 374.25, 28 448, 115.75 448, 224 Z' fill='%237b2cbf' stroke='%23000000' stroke-width='24' stroke-linejoin='round'/%3E%3Ctext x='50%25' y='53%25' dominant-baseline='middle' text-anchor='middle' fill='%23ffffff' font-family='sans-serif' font-weight='900' font-size='190px' letter-spacing='5px'%3ESS%3C/text%3E%3C/svg%3E">
-    
-    <!-- Embedded PWA Manifest via Data URI -->
+    <link rel="icon" type="image/svg+xml" href="ss-icon.svg">
     <link rel="manifest" href="manifest.json">
     <style>
         body {
@@ -53,7 +50,7 @@
             resize: none;
             word-wrap: break-word;
             white-space: pre-wrap;
-            padding-top: 30px; /* Prevents text from hiding under the clear button */
+            padding-top: 30px;
         }
         #footer {
             display: flex;
@@ -101,6 +98,7 @@
     <div id="footer">
         <a href="https://github.com/kanrog/ScriptScreen" target="_blank" class="github-link">GitHub</a>
         <div id="controls">
+            <button class="control-btn" onclick="toggleFullscreen()" title="Toggle Fullscreen">⛶</button>
             <button class="control-btn" onclick="adjustSize(-1)" title="Smaller Text">A-</button>
             <button class="control-btn" onclick="adjustSize(1)" title="Larger Text">A+</button>
         </div>
@@ -116,6 +114,19 @@
 
         function clearText() {
             textarea.value = '';
+            textarea.focus();
+        }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch((err) => {
+                    console.error(`Error attempting to enable fullscreen: ${err.message}`);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
             textarea.focus();
         }
 
