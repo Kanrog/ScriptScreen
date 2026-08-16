@@ -21,7 +21,7 @@ ScriptScreen runs entirely in the browser as a single-file application with zero
 
 ## How to Use
 
-1. Visit the live web app: [https://kanrog.github.io/ScriptScreen/](https://kanrog.github.io/ScriptScreen/)
+1. Visit the live web app: [https://kanrog.com/ScriptScreen/](https://kanrog.com/ScriptScreen/)
 2. Start typing your message immediately.
 
 ### Installing as a Desktop App
