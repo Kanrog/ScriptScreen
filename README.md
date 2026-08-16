@@ -8,6 +8,8 @@ A minimalist, high-contrast, distraction-free digital communication board design
 
 ScriptScreen runs entirely in the browser as a single-file application with zero dependencies, making it fast, secure, and private.
 
+🌐 **Live App:** [https://kanrog.github.io/ScriptScreen/](https://kanrog.github.io/ScriptScreen/)
+
 ## Features
 
 * **High Contrast:** Pure black background with crisp white text for maximum readability from a distance.
@@ -19,17 +21,16 @@ ScriptScreen runs entirely in the browser as a single-file application with zero
 
 ## How to Use
 
-1. Download or clone the `communication_board.html` file.
-2. Open the file in any modern web browser (Chrome, Edge, Safari, Firefox).
-3. Start typing your message immediately.
+1. Visit the live web app: [https://kanrog.github.io/ScriptScreen/](https://kanrog.github.io/ScriptScreen/)
+2. Start typing your message immediately.
 
 ### Installing as a Desktop App
-* **In Chrome or Edge:** Open the file, go to your browser menu (three dots), select **Apps -> Install this site as an app**, and pin it to your taskbar.
+* **In Chrome or Edge:** Open the live link, go to your browser menu (three dots), select **Apps -> Install this site as an app**, and pin it to your taskbar.
 
 ### Installing on a Mobile Phone
-* **Android (Chrome):** Open the file, open the browser menu, and tap **Add to Home screen**.
-* **iOS (Safari):** Open the file, tap the **Share** button, and select **Add to Home Screen**.
+* **Android (Chrome):** Open the live link, open the browser menu, and tap **Add to Home screen**.
+* **iOS (Safari):** Open the live link, tap the **Share** button, and select **Add to Home Screen**.
 
 ## License
 
-This project is open-source and free to use under the MIT License.
+This project is open-source and free to use under the terms of the GNU General Public License v3.0 (GPLv3)
