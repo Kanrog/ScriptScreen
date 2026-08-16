@@ -92,7 +92,7 @@
     </style>
 </head>
 <body>
-    <button id="clear-btn" onclick="clearText()" title="Clear Screen">CLEAR</button>
+    <button id="clear-btn" onclick="clearText()" title="Clear Screen (Delete Key)">CLEAR</button>
     <textarea id="message-area" autofocus spellcheck="false" placeholder="Type your message here..."></textarea>
     
     <div id="footer">
@@ -116,6 +116,13 @@
             textarea.value = '';
             textarea.focus();
         }
+
+        // Listen for the Delete key on PC
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Delete') {
+                clearText();
+            }
+        });
 
         function toggleFullscreen() {
             if (!document.fullscreenElement) {
