@@ -25,6 +25,9 @@ ScriptScreen runs entirely in the browser as a single-file application with zero
 1. Visit the live web app: [https://kanrog.com/ScriptScreen/](https://kanrog.com/ScriptScreen/)
 2. Start typing your message immediately.
 
+### Tip!
+  If you're using a laptop or desktop, clone your display to a secondary monitor or connect a phone/tablet using an app like Spacedesk. This allows your messages to be easily viewable from multiple angles at once.
+
 ### Installing as a Desktop App
 * **In Chrome or Edge:** Open the live link, go to your browser menu (three dots), select **Apps -> Install this site as an app**, and pin it to your taskbar.
 
