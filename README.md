@@ -16,7 +16,8 @@ ScriptScreen runs entirely in the browser as a single-file application with zero
 * **Smart Text Wrapping:** Automatically wraps text to fit the screen width, preventing awkward horizontal scrolling.
 * **Adjustable Font Size:** Built-in `A-` and `A+` buttons in the bottom right corner allow you to instantly scale the text size to your preference.
 * **Persistent Preferences:** Automatically saves your preferred font size using your browser's local storage.
-* **Quick Reset:** Easily clear the entire screen using standard shortcuts like `Ctrl+A` followed by `Backspace` or `Delete`.
+* **Quick Reset(PC):** Easily clear the entire screen using standard shortcuts like `Ctrl+A` followed by `Backspace` or `Delete`.
+* **One-Tap Clear(Mobile):** A dedicated CLEAR button in the top right corner instantly wipes the screen clean, making it extremely fast and easy to use on mobile phones and tablets.
 * **Zero Dependencies:** Contained entirely within a single HTML file with no external servers, databases, or trackers. 100% private.
 
 ## How to Use
