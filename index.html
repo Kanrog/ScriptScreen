@@ -117,8 +117,8 @@
             textarea.focus();
         }
 
-        // Keyboard shortcuts listener
-        window.addEventListener('keydown', (e) => {
+        // Listen for keys directly on the textarea
+        textarea.addEventListener('keydown', (e) => {
             if (e.key === 'Delete') {
                 clearText();
             } else if (e.key === 'PageUp') {
