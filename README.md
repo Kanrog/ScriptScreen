@@ -14,7 +14,7 @@ ScriptScreen runs entirely in the browser as a single-file application with zero
 
 * **High Contrast:** Pure black background with crisp white text for maximum readability from a distance.
 * **Smart Text Wrapping:** Automatically wraps text to fit the screen width, preventing awkward horizontal scrolling.
-* **Adjustable Font Size:** Built-in `A-` and `A+` buttons in the bottom right corner allow you to instantly scale the text size to your preference.
+* **Adjustable Font Size:** Built-in `A-` and `A+` buttons in the bottom right corner allow you to instantly scale the text size to your preference. On PC, you can also use `PgUp` and `PgDn`. 
 * **Persistent Preferences:** Automatically saves your preferred font size using your browser's local storage.
 * **Quick Reset(PC):** Easily clear the entire screen using the "Delete" key on your keyboard.
 * **One-Tap Clear(Mobile):** A dedicated CLEAR button in the top right corner instantly wipes the screen clean, making it extremely fast and easy to use on mobile phones and tablets.

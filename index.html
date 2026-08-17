@@ -117,10 +117,16 @@
             textarea.focus();
         }
 
-        // Listen for the Delete key on PC
+        // Keyboard shortcuts listener
         window.addEventListener('keydown', (e) => {
             if (e.key === 'Delete') {
                 clearText();
+            } else if (e.key === 'PageUp') {
+                e.preventDefault();
+                adjustSize(1); // Page Up increases text size
+            } else if (e.key === 'PageDown') {
+                e.preventDefault();
+                adjustSize(-1); // Page Down decreases text size
             }
         });
 
@@ -153,19 +159,19 @@
                 textarea.focus();
             }
         });
-    </script>
-    <script>
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('./sw.js')
-                .then((registration) => {
-                    console.log('ServiceWorker registered successfully with scope: ', registration.scope);
-                })
-                .catch((error) => {
-                    console.log('ServiceWorker registration failed: ', error);
-                });
-        });
-    }
+
+        // Register Service Worker for Offline PWA Support
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then((registration) => {
+                        console.log('ServiceWorker registered successfully with scope: ', registration.scope);
+                    })
+                    .catch((error) => {
+                        console.log('ServiceWorker registration failed: ', error);
+                    });
+            });
+        }
     </script>
 </body>
 </html>
