@@ -91,6 +91,20 @@
         #voice-select:hover {
             background: #444;
         }
+        #history-select {
+            background: #222;
+            color: #fff;
+            border: 1px solid #444;
+            padding: 6px 8px;
+            font-size: 13px;
+            border-radius: 4px;
+            cursor: pointer;
+            outline: none;
+            max-width: 110px;
+        }
+        #history-select:hover {
+            background: #444;
+        }
     </style>
 </head>
 <body>
@@ -99,8 +113,11 @@
     <div id="footer">
         <a href="https://github.com/kanrog/ScriptScreen" target="_blank" class="github-link">GitHub</a>
         <div id="controls">
-            <button class="control-btn" id="speak-btn" onclick="speakText()" title="Speak Text">Speak</button>
+            <button class="control-btn" id="speak-btn" onclick="speakText()" title="Speak Text (Ctrl+Enter)">Speak</button>
             <select id="voice-select" title="Select Voice"></select>
+            <select id="history-select" title="Recent Messages" onchange="loadHistoryItem(this)">
+                <option value="" disabled selected>History</option>
+            </select>
             <button class="control-btn" onclick="toggleRotate()" title="Rotate 180° for Face-to-Face">180°</button>
             <button class="control-btn" onclick="toggleFullscreen()" title="Toggle Fullscreen">⛶</button>
             <button class="control-btn" onclick="adjustSize(-1)" title="Smaller Text (Page Down)">A-</button>
@@ -112,6 +129,7 @@
     <script>
         const textarea = document.getElementById('message-area');
         const voiceSelect = document.getElementById('voice-select');
+        const historySelect = document.getElementById('history-select');
         let voices = [];
         
         let currentSize = localStorage.getItem('scriptScreenFontSize');
@@ -141,10 +159,48 @@
         window.speechSynthesis.onvoiceschanged = loadVoices;
         loadVoices();
 
+        function updateHistoryDropdown() {
+            let history = JSON.parse(localStorage.getItem('scriptScreenHistory') || '[]');
+            historySelect.innerHTML = '<option value="" disabled selected>History</option>';
+            
+            history.forEach((item) => {
+                let option = document.createElement('option');
+                option.value = item;
+                option.textContent = item.length > 25 ? item.substring(0, 25) + '...' : item;
+                historySelect.appendChild(option);
+            });
+        }
+
+        function saveToHistory(text) {
+            if (!text || text.trim() === '') return;
+            let history = JSON.parse(localStorage.getItem('scriptScreenHistory') || '[]');
+            
+            history = history.filter(item => item !== text);
+            history.unshift(text);
+            
+            if (history.length > 10) {
+                history.pop();
+            }
+            
+            localStorage.setItem('scriptScreenHistory', JSON.stringify(history));
+            updateHistoryDropdown();
+        }
+
+        function loadHistoryItem(selectElement) {
+            if (selectElement.value) {
+                textarea.value = selectElement.value;
+                textarea.focus();
+                selectElement.selectedIndex = 0;
+            }
+        }
+
+        updateHistoryDropdown();
+
         function speakText() {
             if ('speechSynthesis' in window) {
                 const text = textarea.value.trim();
                 if (text) {
+                    saveToHistory(text);
                     window.speechSynthesis.cancel(); 
                     const utterance = new SpeechSynthesisUtterance(text);
                     
@@ -170,7 +226,7 @@
             textarea.focus();
         }
 
-            textarea.addEventListener('keydown', (e) => {
+        textarea.addEventListener('keydown', (e) => {
             if (e.key === 'Delete') {
                 clearText();
             } else if (e.key === 'PageUp') {
