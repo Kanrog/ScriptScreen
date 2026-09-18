@@ -6,23 +6,25 @@
 
 A minimalist, high-contrast, distraction-free digital communication board designed for individuals who are temporarily unable to speak or require a simple text-display tool. 
 
-ScriptScreen runs entirely in the browser as a single-file application with zero dependencies, making it fast, secure, and private.
+ScriptScreen runs entirely in the browser as an offline-first Progressive Web App (PWA) with zero dependencies, making it fast, secure, private, and capable of working seamlessly behind restrictive firewalls or offline environments.
 
-🌐 **Live App:** [https://kanrog.com/ScriptScreen/](https://kanrog.com/ScriptScreen/)
+🌐 **Live App:** [https://kanrog.github.io/ScriptScreen/](https://kanrog.github.io/ScriptScreen/)
 
 ## Features
 
 * **High Contrast:** Pure black background with crisp white text for maximum readability from a distance.
 * **Smart Text Wrapping:** Automatically wraps text to fit the screen width, preventing awkward horizontal scrolling.
-* **Adjustable Font Size:** Built-in `A-` and `A+` buttons in the bottom right corner allow you to instantly scale the text size to your preference. On PC, you can also use `PgUp` and `PgDn`. 
+* **180° Tabletop Rotation:** Tap the `180°` button to flip the text upside down, allowing someone sitting opposite you to read it easily while the phone rests flat on a table between you.
+* **Adjustable Font Size:** Built-in `A-` and `A+` buttons allow you to instantly scale the text size to your preference. You can also use `Page Up` and `Page Down` on your keyboard. 
 * **Persistent Preferences:** Automatically saves your preferred font size using your browser's local storage.
-* **Quick Reset(PC):** Easily clear the entire screen using the "Delete" key on your keyboard.
-* **One-Tap Clear(Mobile):** A dedicated CLEAR button in the top right corner instantly wipes the screen clean, making it extremely fast and easy to use on mobile phones and tablets.
+* **Quick Reset & Clear:** Easily clear the screen using the `Delete` key on your keyboard or tap the dedicated `Clear` button in the bottom control bar.
+* **Offline-First PWA:** Powered by a Service Worker for instant loading and full offline capability without internet dependencies.
+* **Mobile Optimized:** Dynamic viewport sizing (`dvh` and interactive widget support) ensures controls and virtual keyboards never overlap or hide your text area.
 * **Zero Dependencies:** Contained entirely within a single HTML file with no external servers, databases, or trackers. 100% private.
 
 ## How to Use
 
-1. Visit the live web app: [https://kanrog.com/ScriptScreen/](https://kanrog.com/ScriptScreen/)
+1. Visit the live web app: [https://kanrog.github.io/ScriptScreen/](https://kanrog.github.io/ScriptScreen/)
 2. Start typing your message immediately.
 
 ### Tip!
@@ -38,3 +40,5 @@ ScriptScreen runs entirely in the browser as a single-file application with zero
 ## License
 
 This project is open-source and free to use under the terms of the GNU General Public License v3.0 (GPLv3)
+
+© Kanrog Creations
