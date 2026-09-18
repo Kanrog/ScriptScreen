@@ -90,11 +90,12 @@
         <a href="https://github.com/kanrog/ScriptScreen" target="_blank" class="github-link">GitHub</a>
         <div id="controls">
             <button class="control-btn" id="speak-btn" onclick="speakText()" title="Speak Text">Speak</button>
-            <button class="control-btn" onclick="clearText()" title="Clear Screen (Delete Key)">Clear</button>
+            <button class="control-btn" onclick="toggleVoice()" title="Switch Voice">Voice: Auto</button>
             <button class="control-btn" onclick="toggleRotate()" title="Rotate 180° for Face-to-Face">180°</button>
             <button class="control-btn" onclick="toggleFullscreen()" title="Toggle Fullscreen">⛶</button>
             <button class="control-btn" onclick="adjustSize(-1)" title="Smaller Text (Page Down)">A-</button>
             <button class="control-btn" onclick="adjustSize(1)" title="Larger Text (Page Up)">A+</button>
+            <button class="control-btn" onclick="clearText()" title="Clear Screen (Delete Key)" style="color: #ff5555; font-weight: bold;">Clear</button>
         </div>
     </div>
 
@@ -105,7 +106,57 @@
         if (currentSize) {
             textarea.style.fontSize = currentSize + 'vh';
         }
+        let voices = [];
+        let selectedVoiceIndex = 0;
 
+        // Browsers load voices asynchronously, so we listen for them to be ready
+        function loadVoices() {
+            voices = window.speechSynthesis.getVoices();
+        }
+
+        window.speechSynthesis.onvoiceschanged = loadVoices;
+        loadVoices();
+
+        function toggleVoice() {
+            if (voices.length === 0) {
+                loadVoices();
+            }
+            if (voices.length === 0) {
+                alert("No additional voices found on this device.");
+                return;
+            }
+
+            // Cycle to the next available voice
+            selectedVoiceIndex = (selectedVoiceIndex + 1) % voices.length;
+            const currentVoice = voices[selectedVoiceIndex];
+            
+            // Update the button text to show a hint of the active voice name
+            let shortName = currentVoice.name.split(' ')[0]; // Grab first word of voice name
+            document.getElementById('speak-btn').title = `Voice: ${currentVoice.name}`;
+            
+            // Optional: give a quick visual cue on the voice button
+            const voiceBtn = document.querySelectorAll('#controls button')[1];
+            voiceBtn.textContent = `Voice: ${shortName}`;
+        }
+
+        function speakText() {
+            if ('speechSynthesis' in window) {
+                const text = textarea.value.trim();
+                if (text) {
+                    window.speechSynthesis.cancel(); 
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    
+                    // Apply the currently selected voice if available
+                    if (voices.length > 0) {
+                        utterance.voice = voices[selectedVoiceIndex];
+                    }
+                    
+                    window.speechSynthesis.speak(utterance);
+                }
+            } else {
+                alert("Text-to-speech is not supported on this browser.");
+            }
+        }
         function clearText() {
             textarea.value = '';
             textarea.focus();
