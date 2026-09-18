@@ -64,6 +64,7 @@
             gap: 6px;
             flex-wrap: wrap;
             justify-content: flex-end;
+            align-items: center;
         }
         .control-btn {
             background: #222;
@@ -77,9 +78,18 @@
         .control-btn:hover {
             background: #444;
         }
-        #clear-ctrl {
-            color: #ff5555;
-            font-weight: bold;
+        #voice-select {
+            background: #222;
+            color: #fff;
+            border: 1px solid #444;
+            padding: 6px 8px;
+            font-size: 13px;
+            border-radius: 4px;
+            cursor: pointer;
+            outline: none;
+        }
+        #voice-select:hover {
+            background: #444;
         }
     </style>
 </head>
@@ -90,7 +100,7 @@
         <a href="https://github.com/kanrog/ScriptScreen" target="_blank" class="github-link">GitHub</a>
         <div id="controls">
             <button class="control-btn" id="speak-btn" onclick="speakText()" title="Speak Text">Speak</button>
-            <button class="control-btn" onclick="toggleVoice()" title="Switch Voice">Voice: Auto</button>
+            <select id="voice-select" title="Select Voice"></select>
             <button class="control-btn" onclick="toggleRotate()" title="Rotate 180° for Face-to-Face">180°</button>
             <button class="control-btn" onclick="toggleFullscreen()" title="Toggle Fullscreen">⛶</button>
             <button class="control-btn" onclick="adjustSize(-1)" title="Smaller Text (Page Down)">A-</button>
@@ -101,43 +111,35 @@
 
     <script>
         const textarea = document.getElementById('message-area');
+        const voiceSelect = document.getElementById('voice-select');
+        let voices = [];
         
         let currentSize = localStorage.getItem('scriptScreenFontSize');
         if (currentSize) {
             textarea.style.fontSize = currentSize + 'vh';
         }
-        let voices = [];
-        let selectedVoiceIndex = 0;
 
-        // Browsers load voices asynchronously, so we listen for them to be ready
         function loadVoices() {
             voices = window.speechSynthesis.getVoices();
+            voiceSelect.innerHTML = '';
+            
+            if (voices.length === 0) {
+                let option = document.createElement('option');
+                option.textContent = 'Default Voice';
+                voiceSelect.appendChild(option);
+                return;
+            }
+
+            voices.forEach((voice, index) => {
+                let option = document.createElement('option');
+                option.value = index;
+                option.textContent = `${voice.name} (${voice.lang})`;
+                voiceSelect.appendChild(option);
+            });
         }
 
         window.speechSynthesis.onvoiceschanged = loadVoices;
         loadVoices();
-
-        function toggleVoice() {
-            if (voices.length === 0) {
-                loadVoices();
-            }
-            if (voices.length === 0) {
-                alert("No additional voices found on this device.");
-                return;
-            }
-
-            // Cycle to the next available voice
-            selectedVoiceIndex = (selectedVoiceIndex + 1) % voices.length;
-            const currentVoice = voices[selectedVoiceIndex];
-            
-            // Update the button text to show a hint of the active voice name
-            let shortName = currentVoice.name.split(' ')[0]; // Grab first word of voice name
-            document.getElementById('speak-btn').title = `Voice: ${currentVoice.name}`;
-            
-            // Optional: give a quick visual cue on the voice button
-            const voiceBtn = document.querySelectorAll('#controls button')[1];
-            voiceBtn.textContent = `Voice: ${shortName}`;
-        }
 
         function speakText() {
             if ('speechSynthesis' in window) {
@@ -146,9 +148,9 @@
                     window.speechSynthesis.cancel(); 
                     const utterance = new SpeechSynthesisUtterance(text);
                     
-                    // Apply the currently selected voice if available
-                    if (voices.length > 0) {
-                        utterance.voice = voices[selectedVoiceIndex];
+                    const selectedIndex = voiceSelect.value;
+                    if (voices[selectedIndex]) {
+                        utterance.voice = voices[selectedIndex];
                     }
                     
                     window.speechSynthesis.speak(utterance);
@@ -157,6 +159,7 @@
                 alert("Text-to-speech is not supported on this browser.");
             }
         }
+
         function clearText() {
             textarea.value = '';
             textarea.focus();
@@ -166,18 +169,7 @@
             textarea.classList.toggle('rotated');
             textarea.focus();
         }
-        function speakText() {
-            if ('speechSynthesis' in window) {
-                const text = textarea.value.trim();
-                if (text) {
-                    window.speechSynthesis.cancel(); // Cuts off any previous speech immediately
-                    const utterance = new SpeechSynthesisUtterance(text);
-                    window.speechSynthesis.speak(utterance);
-                }
-            } else {
-                alert("Text-to-speech is not supported on this browser.");
-            }
-        }
+
         textarea.addEventListener('keydown', (e) => {
             if (e.key === 'Delete') {
                 clearText();
@@ -215,7 +207,7 @@
         }
 
         document.body.addEventListener('click', (e) => {
-            if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'A') {
+            if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'A' && e.target.tagName !== 'SELECT') {
                 textarea.focus();
             }
         });
