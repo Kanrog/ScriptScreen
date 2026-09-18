@@ -14,6 +14,8 @@ ScriptScreen runs entirely in the browser as an offline-first Progressive Web Ap
 
 * **High Contrast:** Pure black background with crisp white text for maximum readability from a distance.
 * **Smart Text Wrapping:** Automatically wraps text to fit the screen width, preventing awkward horizontal scrolling.
+* **Text-to-Speech & Voice Selector:** Tap the **Speak** button (or press `Ctrl + Enter` / `Cmd + Enter`) to voice your message aloud using your browser's local text-to-speech engine. Use the **Voice Dropdown** next to it to switch between any available speech profiles and language packs installed on your device.
+* **Message History:** Automatically saves up to your last 10 typed and cleared messages to local storage. Use the **History Dropdown** to instantly reload previous phrases.
 * **180° Tabletop Rotation:** Tap the `180°` button to flip the text upside down, allowing someone sitting opposite you to read it easily while the phone rests flat on a table between you.
 * **Adjustable Font Size:** Built-in `A-` and `A+` buttons allow you to instantly scale the text size to your preference. You can also use `Page Up` and `Page Down` on your keyboard. 
 * **Persistent Preferences:** Automatically saves your preferred font size using your browser's local storage.
