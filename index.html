@@ -17,6 +17,7 @@
             flex-direction: column;
             box-sizing: border-box;
             position: relative;
+            overflow: hidden;
         }
         #clear-btn {
             position: absolute;
@@ -51,6 +52,11 @@
             word-wrap: break-word;
             white-space: pre-wrap;
             padding-top: 30px;
+            transition: transform 0.3s ease;
+        }
+        /* Class applied when rotation is toggled for face-to-face reading */
+        #message-area.rotated {
+            transform: rotate(180deg);
         }
         #footer {
             display: flex;
@@ -98,9 +104,10 @@
     <div id="footer">
         <a href="https://github.com/kanrog/ScriptScreen" target="_blank" class="github-link">GitHub</a>
         <div id="controls">
+            <button class="control-btn" onclick="toggleRotate()" title="Rotate 180° for Face-to-Face">180°</button>
             <button class="control-btn" onclick="toggleFullscreen()" title="Toggle Fullscreen">⛶</button>
-            <button class="control-btn" onclick="adjustSize(-1)" title="Smaller Text">A-</button>
-            <button class="control-btn" onclick="adjustSize(1)" title="Larger Text">A+</button>
+            <button class="control-btn" onclick="adjustSize(-1)" title="Smaller Text (Page Down)">A-</button>
+            <button class="control-btn" onclick="adjustSize(1)" title="Larger Text (Page Up)">A+</button>
         </div>
     </div>
 
@@ -114,6 +121,11 @@
 
         function clearText() {
             textarea.value = '';
+            textarea.focus();
+        }
+
+        function toggleRotate() {
+            textarea.classList.toggle('rotated');
             textarea.focus();
         }
 
@@ -174,4 +186,4 @@
         }
     </script>
 </body>
-</html> 
+</html>
