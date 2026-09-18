@@ -217,6 +217,10 @@
         }
 
         function clearText() {
+            const text = textarea.value.trim();
+            if (text) {
+                saveToHistory(text);
+            }
             textarea.value = '';
             textarea.focus();
         }
