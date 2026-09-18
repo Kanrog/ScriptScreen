@@ -89,7 +89,8 @@
     <div id="footer">
         <a href="https://github.com/kanrog/ScriptScreen" target="_blank" class="github-link">GitHub</a>
         <div id="controls">
-            <button class="control-btn" id="clear-ctrl" onclick="clearText()" title="Clear Screen (Delete Key)">Clear</button>
+            <button class="control-btn" id="speak-btn" onclick="speakText()" title="Speak Text">Speak</button>
+            <button class="control-btn" onclick="clearText()" title="Clear Screen (Delete Key)">Clear</button>
             <button class="control-btn" onclick="toggleRotate()" title="Rotate 180° for Face-to-Face">180°</button>
             <button class="control-btn" onclick="toggleFullscreen()" title="Toggle Fullscreen">⛶</button>
             <button class="control-btn" onclick="adjustSize(-1)" title="Smaller Text (Page Down)">A-</button>
@@ -114,7 +115,18 @@
             textarea.classList.toggle('rotated');
             textarea.focus();
         }
-
+        function speakText() {
+            if ('speechSynthesis' in window) {
+                const text = textarea.value.trim();
+                if (text) {
+                    window.speechSynthesis.cancel(); // Cuts off any previous speech immediately
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    window.speechSynthesis.speak(utterance);
+                }
+            } else {
+                alert("Text-to-speech is not supported on this browser.");
+            }
+        }
         textarea.addEventListener('keydown', (e) => {
             if (e.key === 'Delete') {
                 clearText();
