@@ -8,7 +8,7 @@ A minimalist, high-contrast, distraction-free digital communication board design
 
 ScriptScreen runs entirely in the browser as an offline-first Progressive Web App (PWA) with zero dependencies, making it fast, secure, private, and capable of working seamlessly behind restrictive firewalls or offline environments.
 
-🌐 **Live App:** [https://kanrog.github.io/ScriptScreen/](https://kanrog.github.io/ScriptScreen/)
+🌐 **Live App:** [https://kanrog.com/ScriptScreen/](https://kanrog.com/ScriptScreen/)
 
 ## Features
 
@@ -26,8 +26,15 @@ ScriptScreen runs entirely in the browser as an offline-first Progressive Web Ap
 
 ## How to Use
 
-1. Visit the live web app: [https://kanrog.github.io/ScriptScreen/](https://kanrog.github.io/ScriptScreen/)
-2. Start typing your message immediately.
+1. **Open the App:** Visit [https://kanrog.com/ScriptScreen/](https://kanrog.com/ScriptScreen/) in any modern web browser or open your installed PWA.
+2. **Type Your Message:** Click or tap anywhere on the screen to focus the large text area and start typing your message.
+3. **Voice Your Message:** 
+   * Click the **Speak** button in the bottom toolbar, or press **`Ctrl + Enter`** (`Cmd + Enter` on Mac) to have your device read the text aloud.
+   * Use the **Voice Dropdown** menu next to the Speak button to switch between different speech profiles, accents, or language packs installed on your device.
+4. **Recall Past Messages:** Access your previously spoken or cleared phrases by selecting them from the **History** dropdown menu.
+5. **Clear the Screen:** Tap the red **Clear** button in the control bar or press the **`Delete`** key on your keyboard to wipe the board clean (this also automatically saves the message to your history log).
+6. **Flip for Tabletop Conversation:** Tap the **`180°`** button to invert the text upside down when laying the device flat on a table between you and someone else.
+7. **Resize Text:** Use the **`A+`** and **`A-`** buttons, or press **`Page Up` / `Page Down`** on your keyboard, to scale the text size instantly.
 
 ### Tip!
   If you're using a laptop or desktop, clone your display to a secondary monitor or connect a phone/tablet using an app like Spacedesk. This allows your messages to be easily viewable from multiple angles at once.
