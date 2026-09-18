@@ -1,4 +1,4 @@
-const CACHE_NAME = 'scriptscreen-v1';
+const CACHE_NAME = 'scriptscreen-v2';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
