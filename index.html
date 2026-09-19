@@ -217,7 +217,7 @@
         const voiceList = document.getElementById('voice-list');
         
         let voices = [];
-        let selectedVoiceIndex = 0;
+        let selectedVoiceURI = localStorage.getItem('scriptScreenVoiceURI') || '';
         
         let currentSize = localStorage.getItem('scriptScreenFontSize');
         if (currentSize) {
@@ -227,14 +227,7 @@
         function loadVoices() {
             if (!('speechSynthesis' in window)) return;
             voices = window.speechSynthesis.getVoices();
-            
             if (voices.length > 0) {
-                let savedVoiceIndex = localStorage.getItem('scriptScreenVoiceIndex');
-                if (savedVoiceIndex !== null && voices[savedVoiceIndex]) {
-                    selectedVoiceIndex = parseInt(savedVoiceIndex, 10);
-                } else {
-                    selectedVoiceIndex = 0;
-                }
                 updateVoiceButtonLabel();
             }
         }
@@ -242,14 +235,19 @@
         if ('speechSynthesis' in window) {
             window.speechSynthesis.onvoiceschanged = loadVoices;
             loadVoices();
-            // Fallback interval/timeout for mobile browsers that fail to fire voiceschanged reliably
             setTimeout(loadVoices, 250);
             setTimeout(loadVoices, 1000);
         }
 
+        function getSelectedVoice() {
+            if (voices.length === 0) return null;
+            let found = voices.find(v => v.voiceURI === selectedVoiceURI);
+            return found || voices[0];
+        }
+
         function updateVoiceButtonLabel() {
-            if (voices.length > 0 && voices[selectedVoiceIndex]) {
-                let v = voices[selectedVoiceIndex];
+            let v = getSelectedVoice();
+            if (v) {
                 voiceBtn.textContent = v.name.length > 15 ? v.name.substring(0, 15) + '...' : v.name;
                 voiceBtn.title = `Active Voice: ${v.name} (${v.lang})`;
             } else {
@@ -258,27 +256,30 @@
         }
 
         function buildVoiceModalList() {
+            voices = window.speechSynthesis.getVoices();
             voiceList.innerHTML = '';
             
             if (voices.length === 0) {
                 let li = document.createElement('li');
                 li.className = 'voice-item';
-                li.textContent = 'Loading voices or none found...';
+                li.textContent = 'Loading voices... (Tap Speak once if empty)';
                 voiceList.appendChild(li);
                 return;
             }
 
-            voices.forEach((voice, index) => {
+            let currentVoice = getSelectedVoice();
+
+            voices.forEach((voice) => {
                 let li = document.createElement('li');
-                li.className = 'voice-item' + (index === selectedVoiceIndex ? ' selected' : '');
+                let isSelected = currentVoice && voice.voiceURI === currentVoice.voiceURI;
+                li.className = 'voice-item' + (isSelected ? ' selected' : '');
                 li.textContent = `${voice.name} (${voice.lang})`;
-                li.onclick = () => selectVoice(index);
+                li.onclick = () => selectVoice(voice.voiceURI);
                 voiceList.appendChild(li);
             });
         }
 
         function openVoiceModal() {
-            // Force reload voices on click to catch mobile late-loading race conditions
             loadVoices();
             buildVoiceModalList();
             voiceModal.style.display = 'flex';
@@ -295,9 +296,9 @@
             }
         }
 
-        function selectVoice(index) {
-            selectedVoiceIndex = index;
-            localStorage.setItem('scriptScreenVoiceIndex', selectedVoiceIndex);
+        function selectVoice(uri) {
+            selectedVoiceURI = uri;
+            localStorage.setItem('scriptScreenVoiceURI', selectedVoiceURI);
             updateVoiceButtonLabel();
             closeVoiceModal();
         }
@@ -347,8 +348,10 @@
                     window.speechSynthesis.cancel(); 
                     const utterance = new SpeechSynthesisUtterance(text);
                     
-                    if (voices.length > 0 && voices[selectedVoiceIndex]) {
-                        utterance.voice = voices[selectedVoiceIndex];
+                    voices = window.speechSynthesis.getVoices();
+                    let v = getSelectedVoice();
+                    if (v) {
+                        utterance.voice = v;
                     }
                     
                     window.speechSynthesis.speak(utterance);
