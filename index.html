@@ -237,6 +237,7 @@
             loadVoices();
             setTimeout(loadVoices, 250);
             setTimeout(loadVoices, 1000);
+            setTimeout(loadVoices, 3000);
         }
 
         function getSelectedVoice() {
@@ -260,9 +261,19 @@
             voiceList.innerHTML = '';
             
             if (voices.length === 0) {
+                // Android fix: Force a silent TTS warm-up call to wake up the system voice engine
+                if ('speechSynthesis' in window) {
+                    let dummy = new SpeechSynthesisUtterance('');
+                    dummy.volume = 0;
+                    window.speechSynthesis.speak(dummy);
+                    voices = window.speechSynthesis.getVoices();
+                }
+            }
+
+            if (voices.length === 0) {
                 let li = document.createElement('li');
                 li.className = 'voice-item';
-                li.textContent = 'Loading voices... (Tap Speak once if empty)';
+                li.textContent = 'No voices found. Try tapping Speak first.';
                 voiceList.appendChild(li);
                 return;
             }
@@ -414,23 +425,6 @@
             localStorage.setItem('scriptScreenFontSize', newVal);
         }
 
-        document.body.addEventListener('click', (e) => {
-            if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'A' && e.target.tagName !== 'SELECT' && !e.target.closest('#voice-modal')) {
-                textarea.focus();
-            }
-        });
-
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
-                    .then((registration) => {
-                        console.log('ServiceWorker registered successfully with scope: ', registration.scope);
-                    })
-                    .catch((error) => {
-                        console.log('ServiceWorker registration failed: ', error);
-                    });
-            });
-        }
     </script>
 </body>
 </html>
