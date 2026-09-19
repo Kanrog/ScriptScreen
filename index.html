@@ -225,41 +225,49 @@
         }
 
         function loadVoices() {
+            if (!('speechSynthesis' in window)) return;
             voices = window.speechSynthesis.getVoices();
             
-            if (voices.length === 0) {
-                voiceBtn.textContent = 'Default Voice';
-                return;
+            if (voices.length > 0) {
+                let savedVoiceIndex = localStorage.getItem('scriptScreenVoiceIndex');
+                if (savedVoiceIndex !== null && voices[savedVoiceIndex]) {
+                    selectedVoiceIndex = parseInt(savedVoiceIndex, 10);
+                } else {
+                    selectedVoiceIndex = 0;
+                }
+                updateVoiceButtonLabel();
             }
-
-            // Restore previously selected voice index if saved in localStorage
-            let savedVoiceIndex = localStorage.getItem('scriptScreenVoiceIndex');
-            if (savedVoiceIndex !== null && voices[savedVoiceIndex]) {
-                selectedVoiceIndex = parseInt(savedVoiceIndex, 10);
-            } else {
-                selectedVoiceIndex = 0;
-            }
-
-            updateVoiceButtonLabel();
-            buildVoiceModalList();
         }
 
-        window.speechSynthesis.onvoiceschanged = loadVoices;
-        loadVoices();
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.onvoiceschanged = loadVoices;
+            loadVoices();
+            // Fallback interval/timeout for mobile browsers that fail to fire voiceschanged reliably
+            setTimeout(loadVoices, 250);
+            setTimeout(loadVoices, 1000);
+        }
 
         function updateVoiceButtonLabel() {
-            if (voices[selectedVoiceIndex]) {
+            if (voices.length > 0 && voices[selectedVoiceIndex]) {
                 let v = voices[selectedVoiceIndex];
-                // Show a clean truncated label on the button
                 voiceBtn.textContent = v.name.length > 15 ? v.name.substring(0, 15) + '...' : v.name;
                 voiceBtn.title = `Active Voice: ${v.name} (${v.lang})`;
             } else {
-                voiceBtn.textContent = 'Default Voice';
+                voiceBtn.textContent = 'Voice';
             }
         }
 
         function buildVoiceModalList() {
             voiceList.innerHTML = '';
+            
+            if (voices.length === 0) {
+                let li = document.createElement('li');
+                li.className = 'voice-item';
+                li.textContent = 'Loading voices or none found...';
+                voiceList.appendChild(li);
+                return;
+            }
+
             voices.forEach((voice, index) => {
                 let li = document.createElement('li');
                 li.className = 'voice-item' + (index === selectedVoiceIndex ? ' selected' : '');
@@ -270,6 +278,8 @@
         }
 
         function openVoiceModal() {
+            // Force reload voices on click to catch mobile late-loading race conditions
+            loadVoices();
             buildVoiceModalList();
             voiceModal.style.display = 'flex';
         }
