@@ -114,7 +114,7 @@
         <a href="https://github.com/kanrog/ScriptScreen" target="_blank" class="github-link">GitHub</a>
         <div id="controls">
             <button class="control-btn" id="speak-btn" onclick="speakText()" title="Speak Text (Ctrl+Enter)">Speak</button>
-            <select id="voice-select" title="Select Voice"></select>
+            <select id="voice-select" title="Select Voice" onchange="changeVoice(this)"></select>
             <select id="history-select" title="Recent Messages" onchange="loadHistoryItem(this)">
                 <option value="" disabled selected>History</option>
             </select>
@@ -154,10 +154,21 @@
                 option.textContent = `${voice.name} (${voice.lang})`;
                 voiceSelect.appendChild(option);
             });
+
+            // Restore previously selected voice if saved in localStorage
+            let savedVoiceIndex = localStorage.getItem('scriptScreenVoiceIndex');
+            if (savedVoiceIndex !== null && voices[savedVoiceIndex]) {
+                voiceSelect.value = savedVoiceIndex;
+            }
         }
 
         window.speechSynthesis.onvoiceschanged = loadVoices;
         loadVoices();
+
+        function changeVoice(selectElement) {
+            localStorage.setItem('scriptScreenVoiceIndex', selectElement.value);
+            textarea.focus();
+        }
 
         function updateHistoryDropdown() {
             let history = JSON.parse(localStorage.getItem('scriptScreenHistory') || '[]');
