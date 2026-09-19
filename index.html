@@ -78,7 +78,7 @@
         .control-btn:hover {
             background: #444;
         }
-        #voice-select {
+        #voice-btn {
             background: #222;
             color: #fff;
             border: 1px solid #444;
@@ -86,9 +86,12 @@
             font-size: 13px;
             border-radius: 4px;
             cursor: pointer;
-            outline: none;
+            max-width: 140px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
-        #voice-select:hover {
+        #voice-btn:hover {
             background: #444;
         }
         #history-select {
@@ -105,6 +108,75 @@
         #history-select:hover {
             background: #444;
         }
+
+        /* Custom Voice Modal Styling */
+        #voice-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100dvh;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        #voice-modal-content {
+            background: #111;
+            border: 1px solid #444;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 400px;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        #voice-modal-header {
+            padding: 12px 15px;
+            font-family: sans-serif;
+            font-size: 15px;
+            font-weight: bold;
+            border-bottom: 1px solid #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #voice-modal-close {
+            background: none;
+            border: none;
+            color: #aaa;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        #voice-modal-close:hover {
+            color: #fff;
+        }
+        #voice-list {
+            overflow-y: auto;
+            padding: 5px;
+            margin: 0;
+            list-style: none;
+        }
+        .voice-item {
+            padding: 10px 12px;
+            font-family: sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            border-bottom: 1px solid #222;
+            border-radius: 4px;
+        }
+        .voice-item:hover {
+            background: #222;
+        }
+        .voice-item.selected {
+            background: #333;
+            color: #4da6ff;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -114,7 +186,7 @@
         <a href="https://github.com/kanrog/ScriptScreen" target="_blank" class="github-link">GitHub</a>
         <div id="controls">
             <button class="control-btn" id="speak-btn" onclick="speakText()" title="Speak Text (Ctrl+Enter)">Speak</button>
-            <select id="voice-select" title="Select Voice" onchange="changeVoice(this)"></select>
+            <button class="control-btn" id="voice-btn" onclick="openVoiceModal()" title="Select Voice">Voice</button>
             <select id="history-select" title="Recent Messages" onchange="loadHistoryItem(this)">
                 <option value="" disabled selected>History</option>
             </select>
@@ -126,11 +198,26 @@
         </div>
     </div>
 
+    <!-- Voice Selection Modal Overlay -->
+    <div id="voice-modal" onclick="closeVoiceModalOnClickOutside(event)">
+        <div id="voice-modal-content">
+            <div id="voice-modal-header">
+                <span>Select Voice</span>
+                <button id="voice-modal-close" onclick="closeVoiceModal()">&times;</button>
+            </div>
+            <ul id="voice-list"></ul>
+        </div>
+    </div>
+
     <script>
         const textarea = document.getElementById('message-area');
-        const voiceSelect = document.getElementById('voice-select');
+        const voiceBtn = document.getElementById('voice-btn');
         const historySelect = document.getElementById('history-select');
+        const voiceModal = document.getElementById('voice-modal');
+        const voiceList = document.getElementById('voice-list');
+        
         let voices = [];
+        let selectedVoiceIndex = 0;
         
         let currentSize = localStorage.getItem('scriptScreenFontSize');
         if (currentSize) {
@@ -139,35 +226,70 @@
 
         function loadVoices() {
             voices = window.speechSynthesis.getVoices();
-            voiceSelect.innerHTML = '';
             
             if (voices.length === 0) {
-                let option = document.createElement('option');
-                option.textContent = 'Default Voice';
-                voiceSelect.appendChild(option);
+                voiceBtn.textContent = 'Default Voice';
                 return;
             }
 
-            voices.forEach((voice, index) => {
-                let option = document.createElement('option');
-                option.value = index;
-                option.textContent = `${voice.name} (${voice.lang})`;
-                voiceSelect.appendChild(option);
-            });
-
-            // Restore previously selected voice if saved in localStorage
+            // Restore previously selected voice index if saved in localStorage
             let savedVoiceIndex = localStorage.getItem('scriptScreenVoiceIndex');
             if (savedVoiceIndex !== null && voices[savedVoiceIndex]) {
-                voiceSelect.value = savedVoiceIndex;
+                selectedVoiceIndex = parseInt(savedVoiceIndex, 10);
+            } else {
+                selectedVoiceIndex = 0;
             }
+
+            updateVoiceButtonLabel();
+            buildVoiceModalList();
         }
 
         window.speechSynthesis.onvoiceschanged = loadVoices;
         loadVoices();
 
-        function changeVoice(selectElement) {
-            localStorage.setItem('scriptScreenVoiceIndex', selectElement.value);
+        function updateVoiceButtonLabel() {
+            if (voices[selectedVoiceIndex]) {
+                let v = voices[selectedVoiceIndex];
+                // Show a clean truncated label on the button
+                voiceBtn.textContent = v.name.length > 15 ? v.name.substring(0, 15) + '...' : v.name;
+                voiceBtn.title = `Active Voice: ${v.name} (${v.lang})`;
+            } else {
+                voiceBtn.textContent = 'Default Voice';
+            }
+        }
+
+        function buildVoiceModalList() {
+            voiceList.innerHTML = '';
+            voices.forEach((voice, index) => {
+                let li = document.createElement('li');
+                li.className = 'voice-item' + (index === selectedVoiceIndex ? ' selected' : '');
+                li.textContent = `${voice.name} (${voice.lang})`;
+                li.onclick = () => selectVoice(index);
+                voiceList.appendChild(li);
+            });
+        }
+
+        function openVoiceModal() {
+            buildVoiceModalList();
+            voiceModal.style.display = 'flex';
+        }
+
+        function closeVoiceModal() {
+            voiceModal.style.display = 'none';
             textarea.focus();
+        }
+
+        function closeVoiceModalOnClickOutside(e) {
+            if (e.target === voiceModal) {
+                closeVoiceModal();
+            }
+        }
+
+        function selectVoice(index) {
+            selectedVoiceIndex = index;
+            localStorage.setItem('scriptScreenVoiceIndex', selectedVoiceIndex);
+            updateVoiceButtonLabel();
+            closeVoiceModal();
         }
 
         function updateHistoryDropdown() {
@@ -215,9 +337,8 @@
                     window.speechSynthesis.cancel(); 
                     const utterance = new SpeechSynthesisUtterance(text);
                     
-                    const selectedIndex = voiceSelect.value;
-                    if (voices[selectedIndex]) {
-                        utterance.voice = voices[selectedIndex];
+                    if (voices.length > 0 && voices[selectedVoiceIndex]) {
+                        utterance.voice = voices[selectedVoiceIndex];
                     }
                     
                     window.speechSynthesis.speak(utterance);
@@ -281,7 +402,7 @@
         }
 
         document.body.addEventListener('click', (e) => {
-            if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'A' && e.target.tagName !== 'SELECT') {
+            if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'A' && e.target.tagName !== 'SELECT' && !e.target.closest('#voice-modal')) {
                 textarea.focus();
             }
         });
