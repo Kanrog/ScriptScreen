@@ -8,7 +8,7 @@ A minimalist, high-contrast, distraction-free digital communication board design
 
 ScriptScreen runs entirely in the browser as an offline-first Progressive Web App (PWA) with zero dependencies, making it fast, secure, private, and capable of working seamlessly behind restrictive firewalls or offline environments.
 
-🌐 **Live App:** [https://kanrog.github.io/ScriptScreen/](https://kanrog.github.io/ScriptScreen/)
+🌐 **Live App:** [https://kanrog.com/ScriptScreen/](https://kanrog.com/ScriptScreen/)
 
 ## Why I Made ScriptScreen
 
@@ -36,7 +36,7 @@ Hopefully, ScriptScreen can help someone who needs a tool to assist them in havi
 
 ## How to Use
 
-1. **Open the App:** Visit [https://kanrog.github.io/ScriptScreen/](https://kanrog.github.io/ScriptScreen/) in any modern web browser or open your installed PWA.
+1. **Open the App:** Visit [https://kanrog.com/ScriptScreen/](https://kanrog.com/ScriptScreen/) in any modern web browser or open your installed PWA.
 2. **Type Your Message:** Click or tap anywhere on the screen to focus the large text area and start typing your message.
 3. **Voice Your Message:** 
    * Click the **Speak** button in the bottom toolbar, or press **`Ctrl + Enter`** (`Cmd + Enter` on Mac) to have your device read the text aloud.
@@ -54,19 +54,19 @@ Hopefully, ScriptScreen can help someone who needs a tool to assist them in havi
 Because ScriptScreen is built as a Progressive Web App with an offline service worker, you can install it as a standalone application on your device rather than just bookmarking it as a browser tab. This gives you a dedicated app window without browser address bars, plus full offline functionality.
 
 ### On Desktop (Chrome, Edge, or Brave)
-1. Open [https://kanrog.github.io/ScriptScreen/](https://kanrog.github.io/ScriptScreen/).
+1. Open [https://kanrog.com/ScriptScreen/](https://kanrog.com/ScriptScreen/).
 2. Look at the right side of your browser's address bar for the **Install icon** (a small monitor with a downward arrow) or open your browser's main menu (three dots).
 3. Select **Install ScriptScreen** (or *Apps -> Install this site as an app*).
 4. Confirm the installation. ScriptScreen will open in its own standalone window and add an icon to your desktop or applications menu.
 
 ### On Android (Chrome or Samsung Internet)
-1. Open [https://kanrog.github.io/ScriptScreen/](https://kanrog.github.io/ScriptScreen/).
+1. Open [https://kanrog.com/ScriptScreen/](https://kanrog.com/ScriptScreen/).
 2. Open the browser menu (three dots in the top right).
 3. Tap **Install app** or **Add to Home screen**. *(Note: If it prompts you, select "Install" rather than just creating a shortcut so it launches in full standalone mode).*
 4. The app icon will appear on your home screen or app drawer, running independently from your browser tabs.
 
 ### On iOS (Safari)
-1. Open [https://kanrog.github.io/ScriptScreen/](https://kanrog.github.io/ScriptScreen/).
+1. Open [https://kanrog.com/ScriptScreen/](https://kanrog.com/ScriptScreen/).
 2. Tap the **Share** button at the bottom of the screen.
 3. Scroll down and tap **Add to Home Screen**.
 4. Tap **Add** in the top right corner. ScriptScreen will install as a full-screen app icon on your home screen.
