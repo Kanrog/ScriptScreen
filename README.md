@@ -39,13 +39,27 @@ ScriptScreen runs entirely in the browser as an offline-first Progressive Web Ap
 ### Tip!
   If you're using a laptop or desktop, clone your display to a secondary monitor or connect a phone/tablet using an app like Spacedesk. This allows your messages to be easily viewable from multiple angles at once.
 
-### Installing as a Desktop App
-* **In Chrome or Edge:** Open the live link, go to your browser menu (three dots), select **Apps -> Install this site as an app**, and pin it to your taskbar.
+## Installing as a True App (PWA)
 
-### Installing on a Mobile Phone
-* **Android (Chrome):** Open the live link, open the browser menu, and tap **Add to Home screen**.
-* **iOS (Safari):** Open the live link, tap the **Share** button, and select **Add to Home Screen**.
+Because ScriptScreen is built as a Progressive Web App with an offline service worker, you can install it as a standalone application on your device rather than just bookmarking it as a browser tab. This gives you a dedicated app window without browser address bars, plus full offline functionality.
 
+### On Desktop (Chrome, Edge, or Brave)
+1. Open [https://kanrog.github.io/ScriptScreen/](https://kanrog.github.io/ScriptScreen/).
+2. Look at the right side of your browser's address bar for the **Install icon** (a small monitor with a downward arrow) or open your browser's main menu (three dots).
+3. Select **Install ScriptScreen** (or *Apps -> Install this site as an app*).
+4. Confirm the installation. ScriptScreen will open in its own standalone window and add an icon to your desktop or applications menu.
+
+### On Android (Chrome or Samsung Internet)
+1. Open [https://kanrog.github.io/ScriptScreen/](https://kanrog.github.io/ScriptScreen/).
+2. Open the browser menu (three dots in the top right).
+3. Tap **Install app** or **Add to Home screen**. *(Note: If it prompts you, select "Install" rather than just creating a shortcut so it launches in full standalone mode).*
+4. The app icon will appear on your home screen or app drawer, running independently from your browser tabs.
+
+### On iOS (Safari)
+1. Open [https://kanrog.github.io/ScriptScreen/](https://kanrog.github.io/ScriptScreen/).
+2. Tap the **Share** button at the bottom of the screen.
+3. Scroll down and tap **Add to Home Screen**.
+4. Tap **Add** in the top right corner. ScriptScreen will install as a full-screen app icon on your home screen.
 ## License
 
 This project is open-source and free to use under the terms of the GNU General Public License v3.0 (GPLv3)
