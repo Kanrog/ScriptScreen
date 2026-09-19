@@ -8,7 +8,17 @@ A minimalist, high-contrast, distraction-free digital communication board design
 
 ScriptScreen runs entirely in the browser as an offline-first Progressive Web App (PWA) with zero dependencies, making it fast, secure, private, and capable of working seamlessly behind restrictive firewalls or offline environments.
 
-🌐 **Live App:** [https://kanrog.com/ScriptScreen/](https://kanrog.com/ScriptScreen/)
+🌐 **Live App:** [https://kanrog.github.io/ScriptScreen/](https://kanrog.github.io/ScriptScreen/)
+
+## Why I Made ScriptScreen
+
+I am diagnosed with Autism and Bipolar Disorder. Sometimes, when those two group up and get bad at the same time, one of the things that happens to me is that I lose the ability to speak. In addition to dealing with depression, anxiety, and being asocial, I completely stop speaking.
+
+Over the years, I have become more comfortable communicating with people I trust by writing. During a recent episode, I tried to cheer myself up by keeping busy with projects, and ScriptScreen was born. It has transformed the way I communicate during these episodes, especially when having longer, deeper conversations. 
+
+By using my laptop with a second monitor connected, I can sit face-to-face with someone and have a conversation 95% like normal without stressing about them waiting for me to type and show them my screen on a phone or laptop. 
+
+Hopefully, ScriptScreen can help someone who needs a tool to assist them in having a better day. If it helps even just one person, I will be beyond happy.
 
 ## Features
 
@@ -19,14 +29,14 @@ ScriptScreen runs entirely in the browser as an offline-first Progressive Web Ap
 * **180° Tabletop Rotation:** Tap the `180°` button to flip the text upside down, allowing someone sitting opposite you to read it easily while the phone rests flat on a table between you.
 * **Adjustable Font Size:** Built-in `A-` and `A+` buttons allow you to instantly scale the text size to your preference. You can also use `Page Up` and `Page Down` on your keyboard. 
 * **Persistent Preferences:** Automatically saves your preferred font size using your browser's local storage.
-* **Quick Reset & Clear:** Easily clear the screen using the `Delete` key on your keyboard or tap the dedicated `Clear` button in the bottom control bar.
+* **Quick Reset & Clear:** Easily clear the screen using the `Delete` key on your keyboard or tap the dedicated `Clear` button in the bottom control bar (which also automatically saves your message to history).
 * **Offline-First PWA:** Powered by a Service Worker for instant loading and full offline capability without internet dependencies.
 * **Mobile Optimized:** Dynamic viewport sizing (`dvh` and interactive widget support) ensures controls and virtual keyboards never overlap or hide your text area.
 * **Zero Dependencies:** Contained entirely within a single HTML file with no external servers, databases, or trackers. 100% private.
 
 ## How to Use
 
-1. **Open the App:** Visit [https://kanrog.com/ScriptScreen/](https://kanrog.com/ScriptScreen/) in any modern web browser or open your installed PWA.
+1. **Open the App:** Visit [https://kanrog.github.io/ScriptScreen/](https://kanrog.github.io/ScriptScreen/) in any modern web browser or open your installed PWA.
 2. **Type Your Message:** Click or tap anywhere on the screen to focus the large text area and start typing your message.
 3. **Voice Your Message:** 
    * Click the **Speak** button in the bottom toolbar, or press **`Ctrl + Enter`** (`Cmd + Enter` on Mac) to have your device read the text aloud.
